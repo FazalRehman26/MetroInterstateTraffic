@@ -76,6 +76,11 @@ The best-performing model is selected automatically based on the R² score.
 
 ---
 
+## Link of the Web Application
+
+https://metrointerstatetraffic.onrender.com
+
+
 ## Author
 
 Fazal Rehman
