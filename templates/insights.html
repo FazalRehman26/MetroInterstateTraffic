@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Insights</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .carousel {
+        position: relative;
+        width: 1100px;
+        height: 450px;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+      .carousel img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: none;
+      }
+      .carousel img.active {
+        display: block;
+      }
+      .thumbnails {
+        display: flex;
+        margin-top: 10px;
+        gap: 10px;
+      }
+      .thumbnails img {
+        width: 80px;
+        height: 40px;
+        object-fit: cover;
+        opacity: 0.6;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .thumbnails img.active {
+        opacity: 1;
+        border-color: blue;
+      }
+      .navibar {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  z-index: 2;
+}
+
+      .navibar a img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .navibar a img:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navibar">
+      <a href="/"
+        ><img src="static/asset.png" alt="Home" title="Home"
+      /></a>
+      <a href="/insights"
+        ><img
+          src="static/speedometer.png"
+          alt="Insights"
+          title="Insights"
+      /></a>
+      <a href="/predict"
+        ><img src="static/directions.png" alt="Predict" title="Predict"
+      /></a>
+    </nav>
+
+    <div class="carousel">
+      <img src="static/g1.png" class="active" alt="Image 1" />
+      <img src="static/g2.png" alt="Image 2" />
+      <img src="static/g3.png" alt="Image 3" />
+      <img src="static/g4.png" alt="Image 4" />
+      <img src="static/g5.png" alt="Image 5" />
+      <img src="static/g6.png" alt="Image 6" />
+      <img src="static/g7.png" alt="Image 7" />
+      <img src="static/g8.png" alt="Image 8" />
+      <img src="static/g9.png" alt="Image 9" />
+    </div>
+
+    <div class="thumbnails">
+      <img src="static/g1.png" class="active" alt="Thumbnail 1" />
+      <img src="static/g2.png" alt="Thumbnail 2" />
+      <img src="static/g3.png" alt="Thumbnail 3" />
+      <img src="static/g4.png" alt="Thumbnail 4" />
+      <img src="static/g5.png" alt="Thumbnail 5" />
+      <img src="static/g6.png" alt="Thumbnail 6" />
+      <img src="static/g7.png" alt="Thumbnail 7" />
+      <img src="static/g8.png" alt="Thumbnail 8" />
+      <img src="static/g9.png" alt="Thumbnail 9" />
+    </div>
+
+    <script>
+      const slides = document.querySelectorAll(".carousel img");
+      const thumbs = document.querySelectorAll(".thumbnails img");
+      let current = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+          thumbs[i].classList.toggle("active", i === index);
+        });
+      }
+
+      setInterval(() => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      }, 5000); // 5 seconds
+
+      thumbs.forEach((thumb, index) => {
+        thumb.addEventListener("click", () => {
+          current = index;
+          showSlide(current);
+        });
+      });
+    </script>
+  </body>
+</html>

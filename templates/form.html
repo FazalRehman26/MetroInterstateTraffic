@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Metro Interstate Traffic Volume Prediction System</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: black;
+        overflow: hidden;
+        position: relative;
+      }
+      .bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: -1;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.5);
+        padding: 30px 40px;
+        margin-top: 30px;
+        border-radius: 20px;
+        max-width: 1000px;
+        width: 90%;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      }
+      .title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #222;
+      }
+      form {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        align-items: center;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        font-weight: bold;
+        margin-bottom: 6px;
+        font-size: 14px;
+        color: #333;
+      }
+      input[type="text"],
+      select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+      }
+      .btn-container {
+        grid-column: 2 / 3;
+        display: flex;
+        justify-content: center;
+      }
+      input[type="submit"] {
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+      .result {
+        grid-column: 3 / 4;
+        font-weight: bold;
+        font-size: 20px;
+        color: #28a745;
+        text-align: center;
+        padding: 10px;
+        background: #e8f5e9;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .navibar {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        z-index: 2;
+      }
+      .navibar a img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      .navibar a img:hover {
+        transform: scale(1.1);
+      }
+      @media (max-width: 768px) {
+        form {
+          grid-template-columns: 1fr;
+        }
+        .btn-container,
+        .result {
+          grid-column: 1 / 2;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navibar">
+      <a href="/"><img src="static/asset.png" alt="Home" title="Home" /></a>
+      <a href="/insights"><img src="static/speedometer.png" alt="Insights" title="Insights" /></a>
+      <a href="/predict"><img src="static/directions.png" alt="Predict" title="Predict" /></a>
+    </nav>
+
+    <video autoplay muted loop class="bg-video">
+      <source src="{{ url_for('static', filename='cars.mp4') }}" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="container">
+      <div class="title">Metro Interstate Traffic Volume Prediction System</div>
+      <form action="{{ url_for('predict_datapoint') }}" method="POST">
+        <div class="form-group">
+          <label for="holiday">Holiday:</label>
+          <select id="holiday" name="holiday" required>
+            <option value="">--Select--</option>
+            <option value="no holiday">no holiday</option>
+            <option value="yes holiday">yes holiday</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="temp">Temperature:</label>
+          <input type="text" id="temp" name="temp" placeholder="Enter temperature (Kelvin)" required />
+        </div>
+
+        <div class="form-group">
+          <label for="cloud_all">Cloud Cover:</label>
+          <input type="text" id="cloud_all" name="cloud_all" placeholder="Enter cloud %" required />
+        </div>
+
+        <div class="form-group">
+          <label for="weather_main">Weather Condition:</label>
+          <select id="weather_main" name="weather_main" required>
+            <option value="">--Select--</option>
+            <option value="Clouds">Clouds</option>
+            <option value="Clear">Clear</option>
+            <option value="Rain">Rain</option>
+            <option value="Drizzle">Drizzle</option>
+            <option value="Mist">Mist</option>
+            <option value="Haze">Haze</option>
+            <option value="Fog">Fog</option>
+            <option value="Thunderstorm">Thunderstorm</option>
+            <option value="Snow">Snow</option>
+            <option value="Squall">Squall</option>
+            <option value="Smoke">Smoke</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="weekday">Weekday:</label>
+          <select id="weekday" name="weekday" required>
+            <option value="">--Select--</option>
+            <option value="0">0 (Monday)</option>
+            <option value="1">1 (Tuesday)</option>
+            <option value="2">2 (Wednesday)</option>
+            <option value="3">3 (Thursday)</option>
+            <option value="4">4 (Friday)</option>
+            <option value="5">5 (Saturday)</option>
+            <option value="6">6 (Sunday)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="hour">Hour of Day:</label>
+          <select id="hour" name="hour" required>
+            <option value="">--Select--</option>
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Evening">Evening</option>
+            <option value="Night">Night</option>
+            <option value="Late Night">Late Night</option>
+            <option value="Early Morning">Early Morning</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="month">Month:</label>
+          <select id="month" name="month" required>
+            <option value="">--Select--</option>
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+          </select>
+        </div>
+
+        <div class="btn-container">
+          <input type="submit" value="Predict Traffic Volume" />
+        </div>
+
+        <div class="result">{{ final_result }}</div>
+      </form>
+    </div>
+  </body>
+</html>

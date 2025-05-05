@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: #f7f9fc;
+        color: #333;
+        padding-bottom: 60px;
+      }
+
+      header {
+        background: #6fb1a0;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .content {
+        max-width: 1300px;
+        margin: 30px auto;
+        padding: 40px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        align-items: flex-start;
+      }
+
+      .left, .right {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .left img, .right img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      h2 {
+        color: #007bff;
+        margin-top: 20px;
+        font-size: 26px;
+      }
+
+      p {
+        margin: 10px 0;
+        text-align: justify;
+      }
+
+      .dataset-info {
+        background: #e9f5ff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .navibar {
+        position: fixed;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        z-index: 2;
+      }
+
+      .navibar a img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .navibar a img:hover {
+        transform: scale(1.1);
+      }
+
+      footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #6fb1a0;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navibar">
+      <a href="/"><img src="static/asset.png" alt="Home" title="Home" /></a>
+      <a href="/insights"><img src="static/speedometer.png" alt="Insights" title="Insights" /></a>
+      <a href="/predict"><img src="static/directions.png" alt="Predict" title="Predict" /></a>
+    </nav>
+
+    <header>Metro Interstate Traffic Volume Prediction System</header>
+
+    <div class="content">
+      <!-- Top Row: Image | Problem Statement -->
+      <div class="row">
+        <div class="left">
+          <img src="{{ url_for('static', filename='main.jpg') }}" alt="Main Banner Image" />
+        </div>
+        <div class="right">
+          <h2>Problem Statement:</h2>
+          <p>
+            Nowadays, traffic is a major issue for everyone, and it is a source of
+            stress for anyone who has to deal with it on a daily basis. The growth
+            of the population delays traffic and makes it worse day by day. The
+            settlement of modern civilization looks at it, but it is unable to act
+            in such a way as to protect people.
+          </p>
+          <p>
+            We can watch traffic, collect data, and anticipate the next and
+            subsequent observations using a variety of approaches and patterns. The
+            observation agency then makes observations, which are then required out
+            and predictions are made. Being stuck in a cosmopolitan city's traffic
+            is the most common occurrence in one's life.
+          </p>
+          <p>
+            The goal of this project is to build a prediction model using multiple
+            machine learning techniques and to use a template to document the
+            end-to-end stages. We're trying to forecast the value of a continuous
+            variable with the Metro Interstate Traffic Volume dataset, which is a
+            regression issue.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Dataset | Location Image -->
+      <div class="row" style="margin-top: 50px;">
+        <div class="left">
+          <h2>Dataset:</h2>
+          <div class="dataset-info">
+            <p>
+              Hourly Interstate 94 Westbound traffic volume for MN DoT ATR station
+              301, roughly midway between Minneapolis and St Paul, MN. Hourly
+              weather features and holidays included for impacts on traffic volume.
+            </p>
+          </div>
+        </div>
+        <div class="right">
+          <img src="{{ url_for('static', filename='location.jpg') }}" alt="Location Map" />
+        </div>
+      </div>
+    </div>
+
+    <footer>Created by Fazal Rehman</footer>
+  </body>
+</html>
